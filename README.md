@@ -1,10 +1,6 @@
-NEED TO INSTALL
+Описание нашего крутого лаунчера
 
-pip install PyQt5
-
-pip install minecraft-launcher-lib
-
-pip install uuid
-
-pip install random-username
-
+Чтобы начать разрабатывать установите необхожимые библиотект используя команду:
+```
+pip install -r requirements.txt
+```

@@ -1,0 +1,6 @@
+###### Requirements without Version Specifiers ######
+PyQt5
+minecraft-launcher-lib
+uuid
+random-username
+
