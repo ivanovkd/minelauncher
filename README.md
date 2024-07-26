@@ -1,3 +1,5 @@
+NEED TO INSTALL
+
 pip install PyQt5
 
 pip install minecraft-launcher-lib
