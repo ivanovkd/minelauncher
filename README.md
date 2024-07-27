@@ -1,6 +1,11 @@
 Описание нашего крутого лаунчера
 
 Чтобы начать разрабатывать установите необхожимые библиотект используя команду:
-```
-pip install -r requirements.txt
-```
+
+```pip install -r requirements.txt```
+
+либо с помощью скрипта:
+| система   |    команда     |
+|   ---     |      ---       |
+| windows   | `inst_req.bat *beta` |
+| Linux/OSX | `inst_req.sh`  |

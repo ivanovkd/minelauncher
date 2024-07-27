@@ -1,18 +1,13 @@
 from PyQt5.QtCore import QThread, pyqtSignal, QSize, Qt
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QLabel, QLineEdit, QComboBox, QSpacerItem, QSizePolicy, QProgressBar, QPushButton, QApplication, QMainWindow
 from PyQt5.QtGui import QPixmap
+from mine.utils import *
+from mine.run import *
 
-from minecraft_launcher_lib.utils import get_minecraft_directory, get_version_list
-from minecraft_launcher_lib.install import install_minecraft_version
-from minecraft_launcher_lib.command import get_minecraft_command
-
-from random_username.generate import generate_username
-from uuid import uuid1
-
-from subprocess import call
+#from subprocess import call
 from sys import argv, exit
 
-minecraft_directory = get_minecraft_directory().replace('minecraft', 'mylauncher')
+minecraft_directory = get_minectaft_dir("mylauncher")
 
 class LaunchThread(QThread):
     launch_setup_signal = pyqtSignal(str, str)
@@ -46,21 +41,16 @@ class LaunchThread(QThread):
 
     def run(self):
         self.state_update_signal.emit(True)
-
-        install_minecraft_version(versionid=self.version_id, minecraft_directory=minecraft_directory, callback={ 'setStatus': self.update_progress_label, 'setProgress': self.update_progress, 'setMax': self.update_progress_max })
-
-        if self.username == '':
-            self.username = generate_username()[0]
         
-        options = {
-            'username': self.username,
-            'uuid': str(uuid1()),
-            'token': ''
+        callback = { 
+            'setStatus': self.update_progress_label,
+            'setProgress': self.update_progress,
+            'setMax': self.update_progress_max
         }
 
-        call(get_minecraft_command(version=self.version_id, minecraft_directory=minecraft_directory, options=options))
-        self.state_update_signal.emit(False)
+        minecraft_run(minecraft_directory, self.version_id, callback, self.username)
 
+        self.state_update_signal.emit(False)
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -80,7 +70,7 @@ class MainWindow(QMainWindow):
         self.username.setPlaceholderText('Username')
         
         self.version_select = QComboBox(self.centralwidget)
-        for version in get_version_list():
+        for version in get_minectaft_version_list():
             self.version_select.addItem(version['id'])
         
         self.progress_spacer = QSpacerItem(20, 20, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
